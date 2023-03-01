@@ -18,7 +18,7 @@ public class Dog implements Serializable {
     private Long id;
     private String name;
     private String raca;
-    private String idadeEmMeses;
+    private Integer idadeEmMeses;
     private String cor;
     private String descricao;
     private Boolean vacinado;
@@ -31,7 +31,7 @@ public class Dog implements Serializable {
     public Dog() {
     }
 
-    public Dog(Long id, String name, String raca, String idadeEmMeses,
+    public Dog(Long id, String name, String raca, Integer idadeEmMeses,
                String cor, String descricao, Boolean vacinado,
                Integer quantidadeDeDonos, Boolean isAdotado,
                String telefone, String nomeDono, Byte[] foto)
@@ -74,11 +74,11 @@ public class Dog implements Serializable {
         this.raca = raca;
     }
 
-    public String getIdadeEmMeses() {
+    public Integer getIdadeEmMeses() {
         return idadeEmMeses;
     }
 
-    public void setIdadeEmMeses(String idadeEmMeses) {
+    public void setIdadeEmMeses(Integer idadeEmMeses) {
         this.idadeEmMeses = idadeEmMeses;
     }
 
