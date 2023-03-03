@@ -23,6 +23,10 @@ public class DogService {
         return obj.get();
     }
     public Dog insert(Dog obj){
+        if(obj.getName() ==  null){
+            obj.setName("Ainda não possui um nome");
+        }
+        obj.setAdotado(false);
         return repository.save(obj);
     }
     public void delete (Long id){
@@ -33,6 +37,14 @@ public class DogService {
                 .orElseThrow(() -> new ResourceNotFoundException("Dog", "id", id));
         dog.setAdotado(!dog.getAdotado());
         return repository.save(dog);
+    }
+
+    public List<Dog> findAllAdopted(){
+        return repository.findByIsAdotadoTrue();
+    }
+
+    public List<Dog> findAllNotAdopted(){
+        return repository.findByIsAdotadoFalse();
     }
 
 }

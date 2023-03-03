@@ -1,9 +1,8 @@
 package com.adoteumdog.demo.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
@@ -16,17 +15,37 @@ public class Dog implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY
     )
     private Long id;
+    @Column(nullable = true)
     private String name;
+    @Column(nullable = false)
+    @NotBlank(message = "A raça deve ser informada")
     private String raca;
+    @Column(nullable = false)
+    @NotNull(message = "A idade deve ser informada")
     private Integer idadeEmMeses;
+    @Column(nullable = false)
+    @NotBlank(message = "A cor do animal deve ser informada")
     private String cor;
+    @Column(nullable = false)
+    @NotBlank(message = "A descrição deve ser informada")
     private String descricao;
+    @Column(nullable = false)
+    @NotNull(message = "O status de vacinação deve ser informado")
     private Boolean vacinado;
+    @Column(nullable = false)
+    @NotNull(message = "A quantidade de donos deve ser informada")
     private Integer quantidadeDeDonos;
+    @Column(nullable = false)
+    @NotNull(message = "O status de adoção deve ser informado")
     private Boolean isAdotado = false;
+    @Column(nullable = false)
+    @NotBlank(message = "O telefone deve ser informado")
     private String telefone;
+    @Column(nullable = false)
+    @NotBlank(message = "O nome do Dono deve ser informado")
     private String nomeDono;
-    private Byte[] foto;
+    @Lob
+    private byte[] foto;
 
     public Dog() {
     }
@@ -34,7 +53,7 @@ public class Dog implements Serializable {
     public Dog(Long id, String name, String raca, Integer idadeEmMeses,
                String cor, String descricao, Boolean vacinado,
                Integer quantidadeDeDonos, Boolean isAdotado,
-               String telefone, String nomeDono, Byte[] foto)
+               String telefone, String nomeDono, byte[] foto)
     {
         this.id = id;
         this.name = name;
@@ -45,6 +64,20 @@ public class Dog implements Serializable {
         this.vacinado = vacinado;
         this.quantidadeDeDonos = quantidadeDeDonos;
         this.isAdotado = isAdotado;
+        this.telefone = telefone;
+        this.nomeDono = nomeDono;
+        this.foto = foto;
+    }
+
+    public Dog(Long id, String name, String raca, Integer idadeEmMeses, String cor, String descricao, Boolean vacinado, Integer quantidadeDeDonos, String telefone, String nomeDono, byte[] foto) {
+        this.id = id;
+        this.name = name;
+        this.raca = raca;
+        this.idadeEmMeses = idadeEmMeses;
+        this.cor = cor;
+        this.descricao = descricao;
+        this.vacinado = vacinado;
+        this.quantidadeDeDonos = quantidadeDeDonos;
         this.telefone = telefone;
         this.nomeDono = nomeDono;
         this.foto = foto;
@@ -137,12 +170,12 @@ public class Dog implements Serializable {
     public void setNomeDono(String nomeDono) {
         this.nomeDono = nomeDono;
     }
-
-    public Byte[] getFoto() {
+    @Lob
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(Byte[] foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 

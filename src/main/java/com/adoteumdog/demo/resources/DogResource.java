@@ -1,16 +1,22 @@
 package com.adoteumdog.demo.resources;
 
 import com.adoteumdog.demo.entities.Dog;
-import com.adoteumdog.demo.repositories.DogRepository;
 import com.adoteumdog.demo.services.DogService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/dogs")
@@ -28,18 +34,36 @@ public class DogResource {
         Dog obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-
-    @PostMapping
-    public ResponseEntity<Dog> insert(@RequestBody Dog obj){
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    @GetMapping("/adopted")
+    public List<Dog> findAllAdopted(){
+        return service.findAllAdopted();
     }
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+
+    @GetMapping("/notadopted")
+    public List<Dog> findAllNotAdopted(){
+        return service.findAllNotAdopted();
+    }
+
+    @PostMapping("/savedog")
+    public ResponseEntity<Dog> createDog(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("dog") String dogJson) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Dog dog;
+        try {
+            dog = objectMapper.readValue(dogJson, Dog.class);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            dog.setFoto(file.getBytes());
+            service.insert(dog);
+            return ResponseEntity.ok(dog);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PatchMapping("/{id}")
