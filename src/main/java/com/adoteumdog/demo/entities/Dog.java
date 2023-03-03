@@ -16,7 +16,7 @@ public class Dog implements Serializable {
     )
     private Long id;
     @Column(nullable = true)
-    private String name;
+    private String nome;
     @Column(nullable = false)
     @NotBlank(message = "A raça deve ser informada")
     private String raca;
@@ -45,6 +45,8 @@ public class Dog implements Serializable {
     @NotBlank(message = "O nome do Dono deve ser informado")
     private String nomeDono;
     @Lob
+//    @Column(nullable = false)
+//    @NotBlank(message = "Compo foto obrigatório")
     private byte[] foto;
 
     public Dog() {
@@ -56,7 +58,7 @@ public class Dog implements Serializable {
                String telefone, String nomeDono, byte[] foto)
     {
         this.id = id;
-        this.name = name;
+        this.nome = name;
         this.raca = raca;
         this.idadeEmMeses = idadeEmMeses;
         this.cor = cor;
@@ -71,7 +73,7 @@ public class Dog implements Serializable {
 
     public Dog(Long id, String name, String raca, Integer idadeEmMeses, String cor, String descricao, Boolean vacinado, Integer quantidadeDeDonos, String telefone, String nomeDono, byte[] foto) {
         this.id = id;
-        this.name = name;
+        this.nome = name;
         this.raca = raca;
         this.idadeEmMeses = idadeEmMeses;
         this.cor = cor;
@@ -91,12 +93,12 @@ public class Dog implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getRaca() {
@@ -196,7 +198,7 @@ public class Dog implements Serializable {
     public String toString() {
         return "Dog{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + nome + '\'' +
                 ", raca='" + raca + '\'' +
                 ", idadeEmMeses='" + idadeEmMeses + '\'' +
                 ", cor='" + cor + '\'' +

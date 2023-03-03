@@ -6,6 +6,7 @@ import com.adoteumdog.demo.repositories.DogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.UnexpectedTypeException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,14 +24,11 @@ public class DogService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     public Dog insert(Dog obj){
-        if(obj.getName() ==  null){
-            obj.setName("Ainda não possui um nome");
+        if(obj.getNome() ==  null){
+            obj.setNome("Ainda não possui um nome");
         }
         obj.setAdotado(false);
         return repository.save(obj);
-    }
-    public void delete (Long id){
-        repository.deleteById(id);
     }
     public Dog updateIsAdotado(Long id) {
         Dog dog = repository.findById(id)

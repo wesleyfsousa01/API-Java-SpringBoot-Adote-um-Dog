@@ -18,9 +18,9 @@ public class DevConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-        Dog cao = new Dog(null,null,"Pinscher",18,"Malhado",
-                "Pinscher 1",true,1,
-                "889933232","Igor",null);
-        dogService.insert(cao);
+//        Dog cao = new Dog(null,null,"Pinscher",18,"Malhado",
+//                "Pinscher 1",true,1,
+//                "889933232","Igor",null);
+//        dogService.insert(cao);
     }
 }
