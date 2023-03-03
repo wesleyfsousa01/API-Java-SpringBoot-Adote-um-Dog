@@ -1,7 +1,7 @@
 package com.adoteumdog.demo.services;
 
 import com.adoteumdog.demo.entities.Dog;
-import com.adoteumdog.demo.exceptions.ResourceNotFoundException;
+import com.adoteumdog.demo.services.exceptions.ResourceNotFoundException;
 import com.adoteumdog.demo.repositories.DogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class DogService {
 
     public Dog findById(Long id){
         Optional<Dog> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     public Dog insert(Dog obj){
         if(obj.getName() ==  null){
@@ -34,7 +34,7 @@ public class DogService {
     }
     public Dog updateIsAdotado(Long id) {
         Dog dog = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Dog", "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
         dog.setAdotado(!dog.getAdotado());
         return repository.save(dog);
     }
