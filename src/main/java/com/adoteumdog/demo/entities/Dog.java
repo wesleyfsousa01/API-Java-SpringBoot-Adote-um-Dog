@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
@@ -15,74 +14,60 @@ public class Dog implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY
     )
     private Long id;
+    @Column(unique = true)
+    private Long dogCode;
     @Column(nullable = true)
-    private String nome;
+    private String name;
     @Column(nullable = false)
     @NotBlank(message = "A raça deve ser informada")
-    private String raca;
+    private String race;
     @Column(nullable = false)
     @NotNull(message = "A idade deve ser informada")
-    private Integer idadeEmMeses;
+    private Integer ageInMonths;
     @Column(nullable = false)
     @NotBlank(message = "A cor do animal deve ser informada")
-    private String cor;
+    private String color;
     @Column(nullable = false)
     @NotBlank(message = "A descrição deve ser informada")
-    private String descricao;
+    private String description;
     @Column(nullable = false)
     @NotNull(message = "O status de vacinação deve ser informado")
-    private Boolean vacinado;
+    private Boolean vaccinated;
     @Column(nullable = false)
     @NotNull(message = "A quantidade de donos deve ser informada")
-    private Integer quantidadeDeDonos;
+    private Integer amountOfOwners;
     @Column(nullable = false)
     @NotNull(message = "O status de adoção deve ser informado")
-    private Boolean isAdotado = false;
+    private Boolean isAdopted = false;
     @Column(nullable = false)
     @NotBlank(message = "O telefone deve ser informado")
-    private String telefone;
+    private String phone;
     @Column(nullable = false)
     @NotBlank(message = "O nome do Dono deve ser informado")
-    private String nomeDono;
+    private String ownerName;
     @Lob
 //    @Column(nullable = false)
 //    @NotBlank(message = "Compo foto obrigatório")
-    private byte[] foto;
+    private byte[] photo;
 
     public Dog() {
     }
 
-    public Dog(Long id, String name, String raca, Integer idadeEmMeses,
-               String cor, String descricao, Boolean vacinado,
-               Integer quantidadeDeDonos, Boolean isAdotado,
-               String telefone, String nomeDono, byte[] foto)
-    {
+    public Dog(Long id, Long dogCode, String name, String race, Integer ageInMonths,
+               String color, String description, Boolean vaccinated, Integer amountOfOwners,
+               String phone, String nameOwner, byte[] photo) {
         this.id = id;
-        this.nome = name;
-        this.raca = raca;
-        this.idadeEmMeses = idadeEmMeses;
-        this.cor = cor;
-        this.descricao = descricao;
-        this.vacinado = vacinado;
-        this.quantidadeDeDonos = quantidadeDeDonos;
-        this.isAdotado = isAdotado;
-        this.telefone = telefone;
-        this.nomeDono = nomeDono;
-        this.foto = foto;
-    }
-
-    public Dog(Long id, String name, String raca, Integer idadeEmMeses, String cor, String descricao, Boolean vacinado, Integer quantidadeDeDonos, String telefone, String nomeDono, byte[] foto) {
-        this.id = id;
-        this.nome = name;
-        this.raca = raca;
-        this.idadeEmMeses = idadeEmMeses;
-        this.cor = cor;
-        this.descricao = descricao;
-        this.vacinado = vacinado;
-        this.quantidadeDeDonos = quantidadeDeDonos;
-        this.telefone = telefone;
-        this.nomeDono = nomeDono;
-        this.foto = foto;
+        this.dogCode = dogCode;
+        this.name = name;
+        this.race = race;
+        this.ageInMonths = ageInMonths;
+        this.color = color;
+        this.description = description;
+        this.vaccinated = vaccinated;
+        this.amountOfOwners = amountOfOwners;
+        this.phone = phone;
+        this.ownerName = nameOwner;
+        this.photo = photo;
     }
 
     public Long getId() {
@@ -93,92 +78,100 @@ public class Dog implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public Long getDogCode() {
+        return dogCode;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDogCode(Long dogCode) {
+        this.dogCode = dogCode;
     }
 
-    public String getRaca() {
-        return raca;
+    public String getName() {
+        return name;
     }
 
-    public void setRaca(String raca) {
-        this.raca = raca;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getIdadeEmMeses() {
-        return idadeEmMeses;
+    public String getRace() {
+        return race;
     }
 
-    public void setIdadeEmMeses(Integer idadeEmMeses) {
-        this.idadeEmMeses = idadeEmMeses;
+    public void setRace(String race) {
+        this.race = race;
     }
 
-    public String getCor() {
-        return cor;
+    public Integer getAgeInMonths() {
+        return ageInMonths;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void setAgeInMonths(Integer ageInMonths) {
+        this.ageInMonths = ageInMonths;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getColor() {
+        return color;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public Boolean getVacinado() {
-        return vacinado;
+    public String getDescription() {
+        return description;
     }
 
-    public void setVacinado(Boolean vacinado) {
-        this.vacinado = vacinado;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Integer getQuantidadeDeDonos() {
-        return quantidadeDeDonos;
+    public Boolean getVaccinated() {
+        return vaccinated;
     }
 
-    public void setQuantidadeDeDonos(Integer quantidadeDeDonos) {
-        this.quantidadeDeDonos = quantidadeDeDonos;
+    public void setVaccinated(Boolean vaccinated) {
+        this.vaccinated = vaccinated;
     }
 
-    public Boolean getAdotado() {
-        return isAdotado;
+    public Integer getAmountOfOwners() {
+        return amountOfOwners;
     }
 
-    public void setAdotado(Boolean adotado) {
-        isAdotado = adotado;
+    public void setAmountOfOwners(Integer amountOfOwners) {
+        this.amountOfOwners = amountOfOwners;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public Boolean getAdopted() {
+        return isAdopted;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setAdopted(Boolean adopted) {
+        isAdopted = adopted;
     }
 
-    public String getNomeDono() {
-        return nomeDono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setNomeDono(String nomeDono) {
-        this.nomeDono = nomeDono;
-    }
-    @Lob
-    public byte[] getFoto() {
-        return foto;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
     @Override
@@ -186,29 +179,11 @@ public class Dog implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dog dog = (Dog) o;
-        return Objects.equals(id, dog.id);
+        return Objects.equals(dogCode, dog.dogCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Dog{" +
-                "id=" + id +
-                ", name='" + nome + '\'' +
-                ", raca='" + raca + '\'' +
-                ", idadeEmMeses='" + idadeEmMeses + '\'' +
-                ", cor='" + cor + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", vacinado=" + vacinado +
-                ", quantidadeDeDonos=" + quantidadeDeDonos +
-                ", isAdotado=" + isAdotado +
-                ", telefone='" + telefone + '\'' +
-                ", nomeDono='" + nomeDono + '\'' +
-                ", foto=" + Arrays.toString(foto) +
-                '}';
+        return Objects.hash(dogCode);
     }
 }

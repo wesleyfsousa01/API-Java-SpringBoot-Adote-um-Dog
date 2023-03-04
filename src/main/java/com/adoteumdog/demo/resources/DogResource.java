@@ -46,30 +46,16 @@ public class DogResource {
     }
 
     @PostMapping("/savedog")
-    public ResponseEntity<Dog> createDog(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("dog") String dogJson) {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        Dog dog;
-        try {
-            dog = objectMapper.readValue(dogJson, Dog.class);
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        try {
-            dog.setFoto(file.getBytes());
-            service.insert(dog);
-            return ResponseEntity.ok(dog);
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<Dog> save(@RequestParam("dog") String dog, @RequestParam ("foto") MultipartFile foto) throws IOException {
+        Dog dogSaved = service.insert(dog, foto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dogSaved.getId()).toUri();
+        return ResponseEntity.created(uri).body(dogSaved);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateIsAdotado(@PathVariable("id") Long id) {
-        Dog updatedDog = service.updateIsAdotado(id);
+        Dog updatedDog = service.updateIsAdopted(id);
         return ResponseEntity.ok(updatedDog);
     }
 
